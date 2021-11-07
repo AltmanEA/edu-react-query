@@ -1,0 +1,6 @@
+/model/.gradle
+/model/.idea
+/model/build
+/server/.gradle
+/server/.idea
+/server/build
