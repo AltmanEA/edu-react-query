@@ -4,3 +4,6 @@
 /server/.gradle
 /server/.idea
 /server/build
+/client/.gradle
+/client/.idea
+/client/build
