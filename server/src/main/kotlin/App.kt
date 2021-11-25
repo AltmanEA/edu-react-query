@@ -1,13 +1,15 @@
+package ru.altmanea.eduReactQuery
+
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import model.Lesson
-import model.Student
-import routes.lesson
 import routes.student
+import ru.altmanea.eduReactQuery.model.Lesson
+import ru.altmanea.eduReactQuery.model.Student
+import ru.altmanea.eduReactQuery.routes.lesson
 
 const val lessonsPath = "/lessons"
 const val studentsPath = "/students"

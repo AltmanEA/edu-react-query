@@ -2,7 +2,7 @@ plugins {
     kotlin("js") version "1.5.31"
 }
 
-group = "ru.altmanea.edu-react-query"
+group = "ru.altmanea.eduReactQuery"
 version = "0.1"
 
 repositories {

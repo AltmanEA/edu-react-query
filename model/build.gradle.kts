@@ -6,7 +6,7 @@ plugins {
 val kotlinVersion = "1.5.31"
 val serializationVersion = "1.3.0"
 
-group = "ru.altmanea.edu-react-query"
+group = "ru.altmanea.eduReactQuery"
 version = "0.1"
 
 repositories {

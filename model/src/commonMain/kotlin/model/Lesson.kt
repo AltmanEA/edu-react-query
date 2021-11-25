@@ -1,4 +1,4 @@
-package model
+package ru.altmanea.eduReactQuery.model
 
 import kotlinx.serialization.Serializable
 

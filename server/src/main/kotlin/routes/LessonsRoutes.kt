@@ -1,14 +1,14 @@
-package routes
+package ru.altmanea.eduReactQuery.routes
 
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import lessonsList
-import lessonsPath
-import model.Lesson
-import studentsList
+import ru.altmanea.eduReactQuery.lessonsList
+import ru.altmanea.eduReactQuery.lessonsPath
+import ru.altmanea.eduReactQuery.model.Lesson
+import ru.altmanea.eduReactQuery.studentsList
 
 
 fun Route.lesson() =

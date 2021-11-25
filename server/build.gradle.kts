@@ -8,11 +8,11 @@ plugins {
     kotlin("plugin.serialization") version "1.5.31"
 }
 
-group = "ru.altmanea.edu-react-query"
+group = "ru.altmanea.eduReactQuery"
 version = "0.1"
 
 application {
-    mainClass.set("ru.altmanea.edu-react-query.AppKt")
+    mainClass.set("ru.altmanea.eduReactQuery.AppKt")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
 }
 

@@ -5,9 +5,9 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import model.Student
-import studentsList
-import studentsPath
+import ru.altmanea.eduReactQuery.model.Student
+import ru.altmanea.eduReactQuery.studentsList
+import ru.altmanea.eduReactQuery.studentsPath
 
 
 fun Route.student() =
