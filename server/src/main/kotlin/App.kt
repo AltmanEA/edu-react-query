@@ -2,6 +2,7 @@ package ru.altmanea.eduReactQuery
 
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.http.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
@@ -17,10 +18,15 @@ const val studentsPath = "/students"
 fun main() {
     embeddedServer(
         Netty,
-        port = 8080,
+        port = 8000,
         host = "127.0.0.1",
         watchPaths = listOf("classes", "resources")
     ) {
+        install(CORS) {
+            anyHost()
+            method(HttpMethod.Put)
+            method(HttpMethod.Delete)
+        }
         install(ContentNegotiation) {
             json()
         }
