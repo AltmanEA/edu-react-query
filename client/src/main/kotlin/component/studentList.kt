@@ -14,21 +14,31 @@ import react.useRef
 import ru.altmanea.eduReactQuery.model.Student
 import serverUrl
 import studentsPath
-import wrappers.fetch
+import styled.styledButton
+import wrappers.AxiosResponse
+import wrappers.QueryError
+import wrappers.axios
+import kotlin.js.json
+
+//import wrappers.fetch
 
 interface StudentListProps : Props {
     var students: List<Student>
     var addStudent: (String, String) -> Unit
+    var deleteStudent: (Int) -> Unit
 }
 
 fun fcStudentList() = fc("StudentList") { props: StudentListProps ->
     h3 { +"Students" }
     ol {
-        props.students.map { student ->
+        props.students.mapIndexed { index, student ->
             li {
-                Link {
-                    attrs.to = "/students/${student.idName}"
-                    +student.fullName
+                +"${student.fullName} \t"
+                button {
+                    +"X"
+                    attrs.onClickFunction = {
+                        props.deleteStudent(index)
+                    }
                 }
             }
         }
@@ -68,42 +78,60 @@ typealias QueryData = Array<Student>
 fun qcStudentList() = fc("QueryStudentList") { _: Props ->
     val queryClient = useQueryClient()
 
-    val query = useQuery<Any, Any, Any, Any>(
+    val query = useQuery<Any, QueryError, AxiosResponse<QueryData>, Any>(
         "studentList",
         {
-            fetch(serverUrl + studentsPath)
-                .then { it.json() }
+            axios<QueryData>(jso {
+                url = serverUrl + studentsPath
+            })
         }
     )
 
     val addStudentMutation = useMutation<Any, Any, Any, Any>(
-        { _value: String ->
-            fetch(
-                serverUrl + studentsPath,
-                jso {
-                    method = "POST"
-                    body = {
-                        name = "name"
-                    }
-                }
-            )
+        { student: Student ->
+            axios<String>(jso {
+                url = serverUrl + studentsPath
+                method = "Post"
+                headers = json(
+                    "Content-Type" to "application/json"
+                )
+                data = JSON.stringify(student)
+            })
         },
-//        options = jso {
-//            onSuccess = { _: Any, _: Any, _: Any? ->
-//                queryClient.invalidateQueries("studentList")
-//            }
-//        }
+        options = jso {
+            onSuccess = { _: Any, _: Any, _: Any? ->
+                queryClient.invalidateQueries<Any>("studentList")
+            }
+        }
     )
+
+    val deleteStudentMutation = useMutation<Any, Any, Any, Any>(
+        { student: Student ->
+            axios<String>(jso {
+                url = "$serverUrl$studentsPath/${student.idName}"
+                method = "Delete"
+            })
+        },
+        options = jso {
+            onSuccess = { _: Any, _: Any, _: Any? ->
+                queryClient.invalidateQueries<Any>("studentList")
+            }
+        }
+    )
+
 
     if (query.isLoading) div { +"Loading .." }
     else if (query.isError) div { +"Error!" }
     else {
-        val data = query.data.unsafeCast<QueryData>()
+        val data = query.data?.data.unsafeCast<QueryData>()
+        val students = data.map { Student(it.firstname, it.surname) }
         child(fcStudentList()) {
-            attrs.students = data.map { Student(it.firstname, it.surname) }
-            attrs.addStudent = {f, s ->
-                console.log(Student(f, s).idName)
-                addStudentMutation.mutate
+            attrs.students = students
+            attrs.addStudent = { f, s ->
+                addStudentMutation.mutate(Student(f, s), null)
+            }
+            attrs.deleteStudent = {
+                deleteStudentMutation.mutate(students[it], null)
             }
         }
     }

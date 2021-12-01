@@ -24,8 +24,15 @@ fun main() {
     ) {
         install(CORS) {
             anyHost()
+            method(HttpMethod.Options)
             method(HttpMethod.Put)
             method(HttpMethod.Delete)
+            method(HttpMethod.Patch)
+            header(HttpHeaders.Authorization)
+            header(HttpHeaders.AccessControlAllowOrigin)
+            allowNonSimpleContentTypes = true
+            allowCredentials = true
+            allowSameOrigin = true
         }
         install(ContentNegotiation) {
             json()
@@ -49,3 +56,4 @@ val lessonsList = listOf(
     Lesson("Phys", listOf(0, 1).map { studentsList[it] }.toMutableList()),
     Lesson("Story", listOf(0, 1, 3).map { studentsList[it] }.toMutableList())
 ).toMutableList()
+

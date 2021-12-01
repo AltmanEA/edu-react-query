@@ -1,5 +1,6 @@
 plugins {
     kotlin("js") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
 }
 
 group = "ru.altmanea.eduReactQuery"
@@ -28,8 +29,8 @@ dependencies {
     implementation(kotlinw("redux"))
     implementation(kotlinw("react-redux"))
     implementation(kotlinw("react-query"))
-    implementation(npm("cross-fetch", "3.1.4"))
-//    implementation(npm("axios", "0.24.0"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.1")
+    implementation(npm("axios", "0.24.0"))
 }
 
 kotlin {
